@@ -1,0 +1,35 @@
+# Dependencies and generated builds
+node_modules/
+renderer-dist/
+dist/
+release/
+release-*/
+portable-*/
+distribution-*/
+
+# Downloaded Arduino toolchains and installer tools
+vendor/
+
+# Local credentials, configuration, and user projects
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.armblocks
+.codex/
+.agents/
+
+# Logs, temporary files, and machine-specific shortcuts
+*.log
+*.tmp
+*.bak
+*.lnk
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Generated preview
+armblocks-preview.png

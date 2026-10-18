@@ -1,0 +1,56 @@
+{
+  "name": "armblocks-studio",
+  "version": "0.1.7",
+  "description": "Adeept ADA031용 한국어 블록코딩·업로드 데스크톱 앱",
+  "author": "School Robotics Team",
+  "license": "UNLICENSED",
+  "main": "electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"vite --host 127.0.0.1\" \"wait-on tcp:5173 && electron .\"",
+    "build": "vite build",
+    "start": "electron .",
+    "pack:app": "npm run build && electron-builder --win --dir",
+    "pack:installer": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File build-demo-installer.ps1",
+    "pack:portable": "npm run build && powershell.exe -NoProfile -ExecutionPolicy Bypass -File build-portable.ps1",
+    "pack:all": "npm run pack:app && npm run pack:installer && npm run pack:portable && powershell.exe -NoProfile -ExecutionPolicy Bypass -File finalize-release.ps1",
+    "dist": "npm run pack:all"
+  },
+  "devDependencies": {
+    "blockly": "^12.3.1",
+    "concurrently": "^9.2.1",
+    "electron": "^38.2.2",
+    "electron-builder": "^26.0.12",
+    "vite": "^7.1.9",
+    "wait-on": "^9.0.1"
+  },
+  "build": {
+    "appId": "kr.school.armblocks",
+    "productName": "ArmBlocks Studio",
+    "compression": "store",
+    "files": ["renderer-dist/**/*", "electron/**/*", "package.json"],
+    "directories": {
+      "output": "release-0.1.6"
+    },
+    "extraResources": [
+      {
+        "from": "vendor/arduino-runtime",
+        "to": "arduino",
+        "filter": ["**/*", "!arduino-cli-armblocks.exe"]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "ArmBlocks-Studio-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ArmBlocks Studio",
+      "uninstallDisplayName": "ArmBlocks Studio"
+    }
+  }
+}
